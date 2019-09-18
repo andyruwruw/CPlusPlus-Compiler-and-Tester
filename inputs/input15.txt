@@ -1,0 +1,43 @@
+# For use ONLY during the Fall 2019 semester
+# Copyright Cory Barker, Brigham Young University, August 2019
+
+
+Schemes
+Facts
+Rules
+Queries
+schemes facts rules queries
+
+EOF EOF end end END END
+S
+Sc
+Sch
+Sche
+Schem
+Scheme
+Schemes
+Schemess
+SCHEMES
+F
+Fa
+Fac
+Fact
+Facts
+Factss
+FACTS
+R
+Ru
+Rul
+Rule
+Rules
+Ruless
+RULES
+Q
+Qu
+Que
+Quer
+Queri
+Querie
+Queries
+Queriess
+QUERIES

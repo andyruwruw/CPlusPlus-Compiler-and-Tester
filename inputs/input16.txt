@@ -1,0 +1,28 @@
+# For use ONLY during the Fall 2019 semester
+# Copyright Cory Barker, Brigham Young University, August 2019
+
+'Hello World!'
+Hello World
+'Hello' 'World'
+Hello  World
+
+'ThisIsAString'
+ThisIsAnID
+
+'
+This
+string
+is
+spread
+across
+many
+lines.
+'
+
+These
+are
+all
+separate
+IDs
+
+Schemes 'is different than' schemes

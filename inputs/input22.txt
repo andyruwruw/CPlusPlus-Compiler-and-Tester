@@ -1,0 +1,16 @@
+# For use ONLY during the Fall 2019 semester
+# Copyright Cory Barker, Brigham Young University, August 2019
+
+#This test tests valid strings
+'This is a string'
+''
+''''
+''''''
+'frank'
+'''frank'
+'''frank'''
+'''''frank'
+'{}[]()!@#$%^&*'
+'''bob'
+' ''bob'
+'' 'bob'

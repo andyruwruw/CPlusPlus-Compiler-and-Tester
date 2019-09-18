@@ -1,0 +1,30 @@
+(COMMENT,"# For use ONLY during the Fall 2019 semester",1)
+(COMMENT,"# Copyright Cory Barker, Brigham Young University, August 2019",2)
+(STRING,"'Hello World!'",4)
+(ID,"Hello",5)
+(ID,"World",5)
+(STRING,"'Hello'",6)
+(STRING,"'World'",6)
+(ID,"Hello",7)
+(ID,"World",7)
+(STRING,"'ThisIsAString'",9)
+(ID,"ThisIsAnID",10)
+(STRING,"'
+This
+string
+is
+spread
+across
+many
+lines.
+'",12)
+(ID,"These",22)
+(ID,"are",23)
+(ID,"all",24)
+(ID,"separate",25)
+(ID,"IDs",26)
+(SCHEMES,"Schemes",28)
+(STRING,"'is different than'",28)
+(ID,"schemes",28)
+(EOF,"",29)
+Total Tokens = 21

@@ -1,0 +1,19 @@
+(COMMENT,"# For use ONLY during the Fall 2019 semester",1)
+(COMMENT,"# Copyright Cory Barker, Brigham Young University, August 2019",2)
+(STRING,"'
+''
+''''
+''''''
+''''''''
+''''''''''
+''''''''''''
+''''''''''''''
+''''''''''''''''
+'",4)
+(STRING,"' '' '",15)
+(UNDEFINED,"'
+'' 
+'' ''
+",16)
+(EOF,"",19)
+Total Tokens = 6
