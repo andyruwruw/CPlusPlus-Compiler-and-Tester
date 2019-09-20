@@ -3,103 +3,85 @@
 #include <string>
 using namespace std;
 
-int main(int argc, char* argv[])
+string parseFileName(string path);
+
+int main(int argc, char* argv[]) 
 {
-	// Opening Files
-	ifstream in(argv[1]);
-	ifstream solution(argv[2]);
-	if (!solution)
-	{
-		in.close();
-		cerr << "Unable to open " << argv[2] << " for input";
-		return 2;
-	}
-	ofstream out;
-	out.open((argv[3]), std::ofstream::app);
+    ifstream output(argv[1]);
+    ifstream solution(argv[2]);
+    ofstream out;
+    out.open(argv[3], std::ofstream::app);
+    ofstream dout(argv[4]);
 
-	// Logging File Names
-	out << "-- Compairing " << "input" << argv[4] << ".txt with " << argv[2] << " --" << endl << endl;
+    out << " --- Compairing " << parseFileName(argv[1]) << " with " << parseFileName(argv[2]) << "---" << endl;
+    dout << " --- Detailed Comparison for " << parseFileName(argv[1]) << " with " << parseFileName(argv[2]) << endl << endl;
 
-	// Variables for keeping track of the line.
-	string outputLine = "";
-	string solutionLine = "";
+    int diffLines = 0;
+	int line = 1;
+	char outChar;
+	char solChar;
+	bool outLineEnd = false;
+	bool solLineEnd = false;
+    string outLine = "";
+	string solLine = "";
+	bool diff = false;
+	while (outChar != EOF && solChar != EOF)
+	{	
+		if (!outLineEnd) 
+        {
+            outChar = output.get();
+            outLine += outChar;
+        }
+		if (!solLineEnd) 
+        {
+            solChar = solution.get();
+            solLine += solChar;
+        }
+		if (outChar != solChar) 
+        {
+            diff = true;
+        }
 
-	// Variables to detect errors.
-	bool different = false;
-	bool perfect = true;
-
-	// Variables to allow completion of line before printing error
-	bool stopOut = false;
-	bool stopSol = false;
-
-	// Variables for characters grabbed.
-	char outputChar;
-	char solutionChar;
-
-	// While neither file is finished
-	while (in.peek() != EOF || solution.peek() != EOF) 
-	{
-		// Stop and wait if end of line is reached.
-		if (!stopOut)
+		if (outChar == '\n') 
+        {
+            outLineEnd = true;
+        }
+		if (solChar == '\n') 
+        {
+            solLineEnd = true;
+        }
+		if (outLineEnd && solLineEnd)
 		{
-			outputChar = in.get();
-			if (outputChar != '\n') outputLine += outputChar;
-		}
-		if (!stopSol)
-		{
-			solutionChar = solution.get();
-			if (solutionChar != '\n') solutionLine += solutionChar;
-		}
-
-		// If they are not the same
-		if (outputChar != solutionChar)
-		{
-			different = true;
-		}
-
-		// Stop and wait if end of line is reached
-		if (outputChar == '\n')
-		{
-			stopOut = true;
-		}
-		if (solutionChar == '\n')
-		{
-			stopSol = true;
-		}
-
-		// Once both reach the end of a line
-		if (stopOut && stopSol)
-		{
-			// If a difference has been found
-			if (different) {
-				perfect = false;
-				different = false;
-				out << "Difference Found:" << endl;
-				out << "   Output File" << endl;
-				out << "      " << outputLine << endl;
-				out << "   Solution File" << endl;
-				out << "      " << solutionLine << endl << endl;
+			if (diff) {
+				diffLines += 1;
+				dout << "Difference found on line " << to_string(line) << ":" << endl;
+				dout << " -- Output File --" << endl;
+				dout << outLine;
+				dout << " -- Solution File --" << endl;
+				dout << solLine << endl;
 			}
-			// Reset variables.
-			outputLine = "";
-			solutionLine = "";
-			stopOut = false;
-			stopSol = false;
-		}
-		// Break at EOF
-		if (solutionChar == EOF || outputChar == EOF)
-		{
-			break;
+            outLine = "";
+            solLine = "";
+			outLineEnd = false;
+			solLineEnd = false;
+			diff = false;
+			line += 1;
 		}
 	}
-	// Print Results
-	out << "Solution was ";
-	if (perfect) {
-		out << "valid";
-	}
-	else {
-		out << "INVALID";
-	}
-	out << endl << endl;
-	return 0;
+	
+
+    out << "Differences: " << to_string(diffLines) << endl << endl;
+    return 0;
+}
+
+string parseFileName(string path) 
+{
+    for (int i = path.size() - 1; i >= 0; i--)
+    {
+        if (path.at(i) == '/' || path.at(i) == '\\')
+        {
+            return path.substr(i + 1, path.size() - 1);
+        }
+    }
+    return path;
 }
