@@ -13,8 +13,8 @@ int main(int argc, char* argv[])
     out.open(argv[3], std::ofstream::app);
     ofstream dout(argv[4]);
 
-    out << " --- Compairing " << parseFileName(argv[1]) << " with " << parseFileName(argv[2]) << "---" << endl;
-    dout << " --- Detailed Comparison for " << parseFileName(argv[1]) << " with " << parseFileName(argv[2]) << endl << endl;
+    out << " --- Comparison Results ---" << endl << "File 1: " << parseFileName(argv[5]) << " (output)" << endl << "File 2: " << parseFileName(argv[2]) << endl;
+    dout << " --- Detailed Comparison for " << parseFileName(argv[5]) << " with " << parseFileName(argv[2]) << " ---" << endl << endl;
 
     int diffLines = 0;
 	int line = 1;
@@ -24,29 +24,37 @@ int main(int argc, char* argv[])
 	bool solLineEnd = false;
     string outLine = "";
 	string solLine = "";
+    string outFile = "";
 	bool diff = false;
-	while (outChar != EOF && solChar != EOF)
+	while (outChar != EOF || solChar != EOF)
 	{	
-		if (!outLineEnd) 
+		if (!outLineEnd || solChar == EOF) 
         {
             outChar = output.get();
-            outLine += outChar;
+            if (outChar != EOF)
+            {
+                outFile += outChar;
+                outLine += outChar;
+            }   
         }
-		if (!solLineEnd) 
+		if (!solLineEnd || outChar == EOF) 
         {
             solChar = solution.get();
-            solLine += solChar;
+            if (solChar != EOF)
+            {
+                solLine += solChar;
+            } 
         }
 		if (outChar != solChar) 
         {
             diff = true;
         }
 
-		if (outChar == '\n') 
+		if (outChar == '\n' || outChar == EOF) 
         {
             outLineEnd = true;
         }
-		if (solChar == '\n') 
+		if (solChar == '\n' || solChar == EOF) 
         {
             solLineEnd = true;
         }
@@ -54,11 +62,26 @@ int main(int argc, char* argv[])
 		{
 			if (diff) {
 				diffLines += 1;
-				dout << "Difference found on line " << to_string(line) << ":" << endl;
-				dout << " -- Output File --" << endl;
-				dout << outLine;
-				dout << " -- Solution File --" << endl;
-				dout << solLine << endl;
+				dout << "DIFFERENCE FOUND ON LINE " << to_string(line) << ":" << endl;
+                if (outChar != EOF)
+                {
+                    dout << "---Output---" << endl;
+                    dout << outLine;
+                }
+                else 
+                {
+                    dout << "---Output EOF---" << endl;
+                }
+                if (solChar != EOF)
+                {
+                    dout << "---Solution---" << endl;
+				    dout << solLine << endl;
+                }
+                else 
+                {
+                    dout << "---Solution EOF---" << endl << endl;
+                }
+				
 			}
             outLine = "";
             solLine = "";
@@ -68,7 +91,9 @@ int main(int argc, char* argv[])
 			line += 1;
 		}
 	}
-	
+
+    dout << endl << "----Full Output Text----" << endl << endl;
+    dout << outFile;
 
     out << "Differences: " << to_string(diffLines) << endl << endl;
     return 0;

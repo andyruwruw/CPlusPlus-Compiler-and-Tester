@@ -57,10 +57,16 @@ do
     printf "\r ${sp:i++%${#sp}:1} : $done/$numFiles : Compairing Output to $solution_name              "
     # Runs output through compare program with solution file, appending output to RESULTS.txt
     touch results/results_input$num.txt
-    ./compare.o output.txt "$solution_file" results/RESULTS.txt results/results_input$num.txt $num
+    ./compare.o output.txt "$solution_file" results/RESULTS.txt results/results_input$num.txt $file_name
     # Adds one to done.
     done=$((done + 1))
 done
+
+printf "\r ${sp:i++%${#sp}:1} : $done/$numFiles : Finished: Deleting Files.                 "
+rm -rf ./program.dSYM
+rm compare.o
+rm program
+rm output.txt
 
 printf "\r --- Hooray! Test Complete ---                                  \n"
 echo ""
